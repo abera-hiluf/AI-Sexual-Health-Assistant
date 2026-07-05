@@ -18,10 +18,13 @@ def ask_ai(question):
         retrieved
     )
 
+    confidence = round(
+        retrieved[0]["score"] * 100,
+        2
+    )
+
     return {
-
         "answer": answer,
-
-        "retrieved": retrieved
-
+        "retrieved": retrieved,
+        "confidence": confidence
     }
