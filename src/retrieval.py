@@ -1,51 +1,78 @@
+# ==========================================
+# RETRIEVAL MODULE (FAISS VERSION)
+# ==========================================
+
 import os
+import faiss
 import numpy as np
 import pandas as pd
+# pyrefly: ignore [missing-import]
 from sentence_transformers import SentenceTransformer
 
-# Project root
+# ------------------------------------------
+# Paths
+# ------------------------------------------
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
-# Global variables for lazy loading
-_model = None
-_df = None
-_question_embeddings = None
+# ------------------------------------------
+# Load MiniLM
+# ------------------------------------------
 
-def get_top_matches(query: str, top_k: int = 3):
-    global _model, _df, _question_embeddings
-    
-    # Lazy load to avoid overhead when importing
-    if _model is None:
-        _model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-    if _df is None:
-        _df = pd.read_pickle(os.path.join(MODEL_DIR, "knowledge_base.pkl"))
-    if _question_embeddings is None:
-        _question_embeddings = np.load(os.path.join(MODEL_DIR, "question_embeddings.npy"))
-        
-    # Embed the query
-    query_embedding = _model.encode(query, convert_to_numpy=True)
-    
-    # Compute cosine similarity
-    norms = np.linalg.norm(_question_embeddings, axis=1)
-    query_norm = np.linalg.norm(query_embedding)
-    
-    # Handle division by zero just in case
-    norms[norms == 0] = 1e-9
-    if query_norm == 0:
-        query_norm = 1e-9
-        
-    similarities = np.dot(_question_embeddings, query_embedding) / (norms * query_norm)
-    
-    # Get indices of the highest similarity scores
-    top_indices = np.argsort(similarities)[::-1][:top_k]
-    
+print("Loading embedding model...")
+
+embedding_model = SentenceTransformer(
+    "sentence-transformers/all-MiniLM-L6-v2"
+)
+
+print("Embedding model loaded.")
+
+# ------------------------------------------
+# Load FAISS Index
+# ------------------------------------------
+
+index = faiss.read_index(
+    os.path.join(MODEL_DIR, "health_index.faiss")
+)
+
+knowledge_base = pd.read_pickle(
+    os.path.join(MODEL_DIR, "knowledge_base.pkl")
+)
+
+print("Knowledge base loaded.")
+
+# ------------------------------------------
+# Retrieval Function
+# ------------------------------------------
+
+def get_top_matches(user_question, top_k=3):
+
+    user_embedding = embedding_model.encode(
+        [user_question],
+        convert_to_numpy=True
+    ).astype("float32")
+
+    faiss.normalize_L2(user_embedding)
+
+    scores, indices = index.search(
+        user_embedding,
+        top_k
+    )
+
     results = []
-    for idx in top_indices:
+
+    for score, idx in zip(scores[0], indices[0]):
+
         results.append({
-            "score": float(similarities[idx]),
-            "question": _df.iloc[idx]["input"],
-            "answer": _df.iloc[idx]["output"]
+
+            "question": knowledge_base.iloc[idx]["input"],
+
+            "answer": knowledge_base.iloc[idx]["output"],
+
+            "score": float(score)
+
         })
-        
+
     return results
