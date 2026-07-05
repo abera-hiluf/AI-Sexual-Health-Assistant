@@ -14,7 +14,6 @@ from sentence_transformers import SentenceTransformer
 # ------------------------------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 # ------------------------------------------
@@ -49,30 +48,42 @@ print("Knowledge base loaded.")
 
 def get_top_matches(user_question, top_k=3):
 
+    # Convert the user question into an embedding
     user_embedding = embedding_model.encode(
         [user_question],
         convert_to_numpy=True
     ).astype("float32")
 
+    # Normalize for cosine similarity
     faiss.normalize_L2(user_embedding)
 
+    # Search the FAISS index
     scores, indices = index.search(
         user_embedding,
-        top_k
+        top_k * 3   # Retrieve extra results to remove duplicates
     )
 
     results = []
+    seen_questions = set()
 
     for score, idx in zip(scores[0], indices[0]):
 
+        question = knowledge_base.iloc[idx]["input"]
+
+        # Skip duplicate questions
+        if question in seen_questions:
+            continue
+
+        seen_questions.add(question)
+
         results.append({
-
-            "question": knowledge_base.iloc[idx]["input"],
-
+            "question": question,
             "answer": knowledge_base.iloc[idx]["output"],
-
             "score": float(score)
-
         })
+
+        # Stop once we have enough unique results
+        if len(results) == top_k:
+            break
 
     return results

@@ -44,21 +44,23 @@ def generate_answer(
         ]
     )
 
-    prompt = f"""
-You are a professional sexual health information assistant.
+    prompt = f"""You are an AI Sexual Health Information Assistant. Your purpose is to provide accurate, educational, and easy-to-understand sexual health information.
 
-Answer ONLY using the information below.
-
-Question:
-{question}
+Rules:
+1. Use ONLY the relevant information provided below to answer the question. Do not invent medical facts or use outside knowledge.
+2. If the relevant information is insufficient to answer the question, state clearly that the retrieved information is insufficient.
+3. Write in clear, supportive, and accessible language suitable for the general public.
+4. Give practical recommendations when appropriate (e.g., getting tested, using protection).
+5. Recommend consulting a healthcare professional for diagnosis, treatment, or emergencies.
+6. Never claim certainty beyond the provided information.
 
 Relevant Information:
 {context}
 
-Provide a clear, concise, medically responsible answer.
+Question:
+{question}
 
-Answer:
-"""
+Answer:"""
 
     inputs = tokenizer(
         prompt,
@@ -68,21 +70,15 @@ Answer:
     ).to(DEVICE)
 
     outputs = generator_model.generate(
-
         **inputs,
-
         max_new_tokens=150,
-
         temperature=0.3,
-
-        do_sample=False
+        do_sample=True
     )
 
     answer = tokenizer.decode(
-
         outputs[0],
-
         skip_special_tokens=True
     )
 
-    return answer
+    return answer

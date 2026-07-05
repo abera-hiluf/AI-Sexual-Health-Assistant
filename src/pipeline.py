@@ -13,6 +13,15 @@ def ask_ai(question):
         top_k=3
     )
 
+    if not retrieved or retrieved[0]["score"] < 0.45:
+        confidence = round(retrieved[0]["score"] * 100, 2) if retrieved else 0.0
+        return {
+            "answer": "I am sorry, but your question does not seem to be related to the sexual health topics covered in my knowledge base (such as HIV, STIs, testing, prevention, or treatment). Please ask a sexual health-related question, or consult a healthcare professional for specific medical advice.",
+            "retrieved": [],
+            "confidence": confidence,
+            "is_related": False
+        }
+
     answer = generate_answer(
         question,
         retrieved
@@ -26,5 +35,6 @@ def ask_ai(question):
     return {
         "answer": answer,
         "retrieved": retrieved,
-        "confidence": confidence
+        "confidence": confidence,
+        "is_related": True
     }
