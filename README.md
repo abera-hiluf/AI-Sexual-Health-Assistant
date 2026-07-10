@@ -12,6 +12,11 @@ An interactive, Retrieval-Augmented Generation (RAG) web application designed to
   <img src="https://img.shields.io/badge/FLAN--T5-4285F4?style=for-the-badge">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
 </p>
+## Live Demo
+
+**Frontend**
+
+https://v4slew3xjwccmpd4kv3ncd.streamlit.app/
 
 ##  Screenshots
 
