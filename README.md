@@ -1,133 +1,174 @@
-<p align="center">
-  <img src="assets/logo/logo.png" width="130">
-</p>
+# <img src="assets/logo.png" width="48" valign="middle" alt="Logo" /> AI Sexual Health Information Assistant
 
-<h1 align="center">AI Sexual Health Assistant</h1>
-
-<p align="center">
-An interactive, Retrieval-Augmented Generation (RAG) web application designed to provide secure, confidential, and accurate sexual health education.
-</p>
-
-<p align="center">
-Reduce response latency and improve answer relevance using semantic similarity search powered by Sentence Transformers and FAISS, combined with the FLAN-T5 model for answer generation.
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
-  <img src="https://img.shields.io/badge/FAISS-009688?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Sentence%20Transformers-5A67D8?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Transformers-FF9900?style=for-the-badge">
-  <img src="https://img.shields.io/badge/FLAN--T5-4285F4?style=for-the-badge">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
-</p>
+An interactive, Retrieval-Augmented Generation (RAG) web application designed to provide secure, confidential, and accurate sexual health education. The system combines semantic similarity search over a curated knowledge base of **18,000+ QA pairs** with the transformer-based **FLAN-T5** model to generate clear, context-aware answers.
 
 ---
 
-## Live Demo
+## 📸 Screenshots
 
-**Frontend**
+Here is a visual look at the application's clean, modern interface:
 
-https://your-streamlit-app-link-here
-
----
-
-## Problem
-
-Users often need reliable sexual health information, but they may not know where to find clear, confidential, and educational answers quickly.
-
-This project addresses that problem by combining semantic search with a language model to generate context-aware answers from a curated sexual health knowledge base.
+| Home Dashboard | Question & Answer Search |
+| :---: | :---: |
+| ![Home Dashboard](assets/screenshots/home.png) | ![Answer View](assets/screenshots/answer.png) |
 
 ---
 
-## Why AI Sexual Health Assistant?
+## 🌟 Features
 
-This assistant helps users ask sexual health questions in natural language and receive helpful answers based on a curated dataset of more than 18,000 question-answer pairs.
-
-It uses a Retrieval-Augmented Generation pipeline:
-
-- The user asks a question
-- The system finds semantically similar questions from the knowledge base
-- The best matching context is passed to the FLAN-T5 model
-- The model generates a clear and educational answer
-
-This approach improves relevance, reduces hallucination, and keeps responses grounded in the dataset.
-
----
-
-## Features
-
-| Feature | Description |
-| ------- | ----------- |
-| Semantic Search | Finds semantically similar questions using vector embeddings |
-| Fast Retrieval | Uses FAISS for efficient nearest-neighbor search |
-| Answer Generation | Uses FLAN-T5 to generate natural language responses |
-| Knowledge Match Score | Displays retrieval similarity for the user question |
-| Guardrails | Rejects unrelated questions gracefully |
-| Educational Focus | Designed for sexual health education only |
-| Modern UI | Clean Streamlit interface with custom styling |
-| Medical Disclaimer | Includes a clear disclaimer for safety |
+* **Dual Interface Modes:**
+  * **Quick Search Q&A:** Get direct, single-turn responses alongside specific reference passages, matching scores, and relevant knowledge base entries.
+  * **Interactive Chatbot:** A multi-turn conversational interface with session history memory.
+* **Semantic Search Pipeline:** Uses `all-MiniLM-L6-v2` embeddings combined with a **FAISS** index for high-speed, cosine-similarity matching of user queries.
+* **Configurable Controls:**
+  * **Confidence Match Threshold:** Adjust the minimum similarity match required to generate an answer, filtering out unrelated questions.
+  * **Top-K Context Size:** Control the number of reference texts provided as context to the generator.
+* **Interactive Quick-Start Topics:** Clickable sample queries for HIV/AIDS, STIs, testing, prevention, and care.
+* **Confidential & Educational:** Secure interface containing integrated support hotlines, helpline links, and a strict medical disclaimer callout.
+* **Modern Premium Styling:** Custom CSS layout, hover micro-animations, card designs, and compatibility with system dark/light modes.
 
 ---
 
-## Architecture
+## 🛠️ Architecture
 
-```text
+```
 User Question
      │
      ▼
-SentenceTransformer
-[Query Embedding]
-     │
-     ▼
-FAISS Vector Index
-[Top-K Retrieval]
-     │
-     ▼
-Contextual Prompt
-[Retrieved Knowledge + User Question]
-     │
-     ▼
-FLAN-T5
-[Generated Response]
-     │
-     ▼
-Final Answer
+┌─────────────────────────┐
+│ SentenceTransformer     │  (all-MiniLM-L6-v2)
+│ [Query Embedding]       │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ FAISS Vector Index      │  (Similarity Search over 18,000+ QA pairs)
+│ [Top-K Passage Retrieval]│
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Contextual prompt       │  (Filters matches below Confidence Threshold)
+│ [Instruction Template]  │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ FLAN-T5-Base LLM        │  (Sequence-to-sequence response generation)
+│ [Synthesized Answer]    │
+└────────────┬────────────┘
+             │
+             ▼
+       Final Response
+```
 
+---
 
-Technologies Used
-Python
-Streamlit
-Pandas
-NumPy
-PyTorch
-Sentence Transformers
-FAISS
-Transformers
-FLAN-T5
-Retrieval-Augmented Generation (RAG)
+## 📂 Project Structure
 
-# Clone the repository
-git clone https://github.com/your-username/AI-Sexual-Health-Assistant.git
+```
+AI-Sexual-Health-Assistant/
+│
+├── app.py                 # Main Streamlit web application
+├── requirements.txt       # Dependencies
+├── README.md              # Project documentation
+│
+├── assets/                # Design assets
+│   ├── logo.png           # App logo
+│   └── screenshots/       # App UI screenshots
+│       ├── home.png
+│       └── answer.png
+│
+├── components/            # UI components
+│   ├── chat.py            # Chatbot layout and session history
+│   ├── disclaimer.py      # Medical disclaimer banner
+│   ├── footer.py          # Credential & tech metadata footer
+│   ├── hero.py            # Welcome banner
+│   ├── sidebar.py         # Left UI Sidebar controls & resource cards
+│   └── styles.py          # Custom CSS stylesheets
+│
+├── models/                # FAISS Index and pickled Knowledge Base
+│   ├── health_index.faiss # Indexed question embeddings
+│   └── knowledge_base.pkl # QA pair dataframe
+│
+└── src/                   # AI pipeline modules
+    ├── generator.py       # FLAN-T5 prompt formatting and generation
+    ├── pipeline.py        # Search and generation orchestration
+    └── retrieval.py       # FAISS database query execution
+```
 
-# Navigate to the project
-cd AI-Sexual-Health-Assistant
+---
 
-# Create a virtual environment
-python -m venv venv
+## 💻 Local Installation & Setup
 
-# Activate the virtual environment (Windows)
-venv\Scripts\activate
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/AI-Sexual-Health-Assistant.git
+   cd AI-Sexual-Health-Assistant
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
+2. **Run Using Your Shell:**
 
-# Run the app
-python -m streamlit run app.py
+   * **In PowerShell (Windows):**
+     * Option A (Activate first):
+       ```powershell
+       .\venv\Scripts\Activate.ps1
+       streamlit run app.py
+       ```
+     * Option B (Direct execute):
+       ```powershell
+       .\venv\Scripts\streamlit run app.py
+       ```
 
-Author
+   * **In Git Bash / WSL / Linux (Bash):**
+     * Option A (Activate first):
+       ```bash
+       source venv/Scripts/activate
+       streamlit run app.py
+       ```
+     * Option B (Direct execute):
+       ```bash
+       ./venv/Scripts/streamlit run app.py
+       ```
 
-Abera Hiluf Teshale
+---
 
-AI and Machine Learning Student (Anna University)
-linkedn Profile:https://www.linkedin.com/in/abera-teshale-41a3a929b/
+## ☁️ Deployment Guide
+
+Streamlit is a Python-based stateful web framework. Below are the recommended deployment strategies:
+
+### 1. Hugging Face Spaces (Recommended & Free)
+Hugging Face Spaces natively supports Streamlit and handles Python/PyTorch dependencies efficiently.
+* Go to [Hugging Face Spaces](https://huggingface.co/spaces) and create a new Space.
+* Select **Streamlit** as the SDK.
+* Push your repository or upload your files (including `models/` vector files).
+* *Tip:* Spaces automatically cache models on their servers, making loading extremely fast.
+
+### 2. Render (Free / Paid tier)
+* Sign up on [Render](https://render.com).
+* Create a **Web Service** connected to your GitHub repository.
+* Set the environment properties:
+  * **Runtime:** `Python`
+  * **Build Command:** `pip install -r requirements.txt`
+  * **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
+* *Note:* Ensure you allocate a service type with at least 2GB of RAM since loading the FLAN-T5 model and FAISS index requires memory.
+
+### 3. Streamlit Community Cloud (Free)
+* Go to [Streamlit Share](https://share.streamlit.io/).
+* Connect your GitHub account, choose this repository, the main branch, and `app.py` as the entry file.
+* Click **Deploy**.
+
+---
+
+## 🧑‍💻 Technical Details & Stack
+
+* **Front-End Framework:** Streamlit (v1.58.0)
+* **Embeddings Model:** `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors)
+* **Vector Store:** Facebook AI Similarity Search (`FAISS CPU`)
+* **Generator Model:** Google's `FLAN-T5 Base` (248M parameters text-to-text transformer)
+* **Data Processing:** Pandas, NumPy, PyTorch
+
+---
+
+## 🛡️ Disclaimer
+This system is an AI-powered educational reference. It does not provide clinical diagnosis or professional medical treatment. Always consult a certified healthcare professional or contact national support helplines (e.g., CDC-INFO) for medical decisions.
