@@ -3,8 +3,17 @@
 An interactive, Retrieval-Augmented Generation (RAG) web application designed to provide secure, confidential, and accurate sexual health education. The system combines semantic similarity search over a curated knowledge base of **18,000+ QA pairs** with the transformer-based **FLAN-T5** model to generate clear, context-aware answers.
 
 ---
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
+  <img src="https://img.shields.io/badge/FAISS-009688?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Sentence%20Transformers-5A67D8?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Transformers-FF9900?style=for-the-badge">
+  <img src="https://img.shields.io/badge/FLAN--T5-4285F4?style=for-the-badge">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
+</p>
 
-## 📸 Screenshots
+##  Screenshots
 
 Here is a visual look at the application's clean, modern interface:
 
@@ -14,7 +23,7 @@ Here is a visual look at the application's clean, modern interface:
 
 ---
 
-## 🌟 Features
+##  Features
 
 * **Dual Interface Modes:**
   * **Quick Search Q&A:** Get direct, single-turn responses alongside specific reference passages, matching scores, and relevant knowledge base entries.
@@ -29,7 +38,7 @@ Here is a visual look at the application's clean, modern interface:
 
 ---
 
-## 🛠️ Architecture
+##  Architecture
 
 ```
 User Question
@@ -64,7 +73,7 @@ User Question
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 AI-Sexual-Health-Assistant/
@@ -99,7 +108,7 @@ AI-Sexual-Health-Assistant/
 
 ---
 
-## 💻 Local Installation & Setup
+##  Local Installation & Setup
 
 1. **Clone the Repository:**
    ```bash
@@ -131,36 +140,9 @@ AI-Sexual-Health-Assistant/
        ./venv/Scripts/streamlit run app.py
        ```
 
----
 
-## ☁️ Deployment Guide
 
-Streamlit is a Python-based stateful web framework. Below are the recommended deployment strategies:
-
-### 1. Hugging Face Spaces (Recommended & Free)
-Hugging Face Spaces natively supports Streamlit and handles Python/PyTorch dependencies efficiently.
-* Go to [Hugging Face Spaces](https://huggingface.co/spaces) and create a new Space.
-* Select **Streamlit** as the SDK.
-* Push your repository or upload your files (including `models/` vector files).
-* *Tip:* Spaces automatically cache models on their servers, making loading extremely fast.
-
-### 2. Render (Free / Paid tier)
-* Sign up on [Render](https://render.com).
-* Create a **Web Service** connected to your GitHub repository.
-* Set the environment properties:
-  * **Runtime:** `Python`
-  * **Build Command:** `pip install -r requirements.txt`
-  * **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
-* *Note:* Ensure you allocate a service type with at least 2GB of RAM since loading the FLAN-T5 model and FAISS index requires memory.
-
-### 3. Streamlit Community Cloud (Free)
-* Go to [Streamlit Share](https://share.streamlit.io/).
-* Connect your GitHub account, choose this repository, the main branch, and `app.py` as the entry file.
-* Click **Deploy**.
-
----
-
-## 🧑‍💻 Technical Details & Stack
+##  Technical Details & Stack
 
 * **Front-End Framework:** Streamlit (v1.58.0)
 * **Embeddings Model:** `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors)
@@ -170,5 +152,5 @@ Hugging Face Spaces natively supports Streamlit and handles Python/PyTorch depen
 
 ---
 
-## 🛡️ Disclaimer
+##  Disclaimer
 This system is an AI-powered educational reference. It does not provide clinical diagnosis or professional medical treatment. Always consult a certified healthcare professional or contact national support helplines (e.g., CDC-INFO) for medical decisions.
