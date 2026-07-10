@@ -38,13 +38,13 @@ else:
     # Single Q&A view
     st.subheader("🔍 Quick Search Question & Answer")
     
-    # Check if a question was clicked from the sidebar
-    default_question = st.session_state.get("clicked_question", "")
+    # Check if a question was clicked from the sidebar and override state
+    if "clicked_question" in st.session_state:
+        st.session_state.input_question = st.session_state.clicked_question
     
     # Render main input text box
     question = st.text_input(
         "Enter your sexual health question:",
-        value=default_question,
         placeholder="e.g., Can HIV be cured?",
         key="input_question"
     )

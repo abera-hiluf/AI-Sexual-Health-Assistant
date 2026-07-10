@@ -93,6 +93,7 @@ def render_sidebar():
         for idx, question in enumerate(sample_questions[topic]):
             if st.button(question, key=f"q_{topic.replace(' ', '_')}_{idx}"):
                 st.session_state.clicked_question = question
+                st.session_state.auto_submit = True
                 # Trigger a rerun so the main input field updates instantly
                 st.rerun()
 

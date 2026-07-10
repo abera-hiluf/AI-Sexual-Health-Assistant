@@ -21,6 +21,28 @@ def render_chat(confidence_threshold=0.45, top_k=3):
     """
     init_chat_history()
 
+    # Check if a question was clicked from the sidebar quick-start
+    if "clicked_question" in st.session_state:
+        prompt = st.session_state.pop("clicked_question")
+        st.session_state.pop("auto_submit", None)  # Clean up auto_submit flag
+        
+        st.session_state.chat_messages.append({
+            "role": "user",
+            "content": prompt,
+            "retrieved": [],
+            "confidence": None
+        })
+        
+        result = ask_ai(prompt, confidence_threshold=confidence_threshold, top_k=top_k)
+        
+        st.session_state.chat_messages.append({
+            "role": "assistant",
+            "content": result["answer"],
+            "retrieved": result["retrieved"],
+            "confidence": result["confidence"]
+        })
+        st.rerun()
+
     # Clear chat history button
     col1, col2 = st.columns([6, 1])
     with col2:
