@@ -5,3 +5,4 @@ models/*.npy
 models/*.pkl
 .env
 models/*.faiss
+.cache/
