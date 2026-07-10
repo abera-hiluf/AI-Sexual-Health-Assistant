@@ -131,34 +131,7 @@ AI-Sexual-Health-Assistant/
        ./venv/Scripts/streamlit run app.py
        ```
 
----
 
-## ☁️ Deployment Guide
-
-Streamlit is a Python-based stateful web framework. Below are the recommended deployment strategies:
-
-### 1. Hugging Face Spaces (Recommended & Free)
-Hugging Face Spaces natively supports Streamlit and handles Python/PyTorch dependencies efficiently.
-* Go to [Hugging Face Spaces](https://huggingface.co/spaces) and create a new Space.
-* Select **Streamlit** as the SDK.
-* Push your repository or upload your files (including `models/` vector files).
-* *Tip:* Spaces automatically cache models on their servers, making loading extremely fast.
-
-### 2. Render (Free / Paid tier)
-* Sign up on [Render](https://render.com).
-* Create a **Web Service** connected to your GitHub repository.
-* Set the environment properties:
-  * **Runtime:** `Python`
-  * **Build Command:** `pip install -r requirements.txt`
-  * **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
-* *Note:* Ensure you allocate a service type with at least 2GB of RAM since loading the FLAN-T5 model and FAISS index requires memory.
-
-### 3. Streamlit Community Cloud (Free)
-* Go to [Streamlit Share](https://share.streamlit.io/).
-* Connect your GitHub account, choose this repository, the main branch, and `app.py` as the entry file.
-* Click **Deploy**.
-
----
 
 ## 🧑‍💻 Technical Details & Stack
 
