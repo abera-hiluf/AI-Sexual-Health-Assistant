@@ -3,8 +3,17 @@
 An interactive, Retrieval-Augmented Generation (RAG) web application designed to provide secure, confidential, and accurate sexual health education. The system combines semantic similarity search over a curated knowledge base of **18,000+ QA pairs** with the transformer-based **FLAN-T5** model to generate clear, context-aware answers.
 
 ---
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
+  <img src="https://img.shields.io/badge/FAISS-009688?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Sentence%20Transformers-5A67D8?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Transformers-FF9900?style=for-the-badge">
+  <img src="https://img.shields.io/badge/FLAN--T5-4285F4?style=for-the-badge">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
+</p>
 
-## 📸 Screenshots
+##  Screenshots
 
 Here is a visual look at the application's clean, modern interface:
 
@@ -14,7 +23,7 @@ Here is a visual look at the application's clean, modern interface:
 
 ---
 
-## 🌟 Features
+##  Features
 
 * **Dual Interface Modes:**
   * **Quick Search Q&A:** Get direct, single-turn responses alongside specific reference passages, matching scores, and relevant knowledge base entries.
@@ -29,7 +38,7 @@ Here is a visual look at the application's clean, modern interface:
 
 ---
 
-## 🛠️ Architecture
+##  Architecture
 
 ```
 User Question
@@ -64,7 +73,7 @@ User Question
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 AI-Sexual-Health-Assistant/
@@ -99,7 +108,7 @@ AI-Sexual-Health-Assistant/
 
 ---
 
-## 💻 Local Installation & Setup
+##  Local Installation & Setup
 
 1. **Clone the Repository:**
    ```bash
@@ -133,7 +142,7 @@ AI-Sexual-Health-Assistant/
 
 
 
-## 🧑‍💻 Technical Details & Stack
+##  Technical Details & Stack
 
 * **Front-End Framework:** Streamlit (v1.58.0)
 * **Embeddings Model:** `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors)
@@ -143,5 +152,5 @@ AI-Sexual-Health-Assistant/
 
 ---
 
-## 🛡️ Disclaimer
+##  Disclaimer
 This system is an AI-powered educational reference. It does not provide clinical diagnosis or professional medical treatment. Always consult a certified healthcare professional or contact national support helplines (e.g., CDC-INFO) for medical decisions.
