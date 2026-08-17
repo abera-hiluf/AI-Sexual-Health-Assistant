@@ -99,32 +99,6 @@ def render_sidebar():
 
         st.divider()
 
-        # Section: Important Medical Support Resources
-        st.markdown("### 📞 Support & Helpline Contacts")
-        
-        st.markdown(
-            """
-            <div class="resource-card">
-                <strong>CDC-INFO (USA)</strong><br>
-                1-800-CDC-INFO (1-800-232-4636)<br>
-                <a href="https://www.cdc.gov/cdc-info/index.html" target="_blank">cdc.gov/cdc-info</a>
-            </div>
-            <div class="resource-card">
-                <strong>National AIDS Hotline (USA)</strong><br>
-                1-800-342-AIDS (1-800-342-2437)<br>
-                Available 24/7
-            </div>
-            <div class="resource-card">
-                <strong>Planned Parenthood Helpline</strong><br>
-                1-800-230-PLAN (1-800-230-7526)<br>
-                <a href="https://www.plannedparenthood.org" target="_blank">plannedparenthood.org</a>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        st.divider()
-
         # Section: Developer Information
         st.markdown("### 🧑‍💻 System Metadata")
         st.markdown(
